@@ -39,7 +39,7 @@ env:
 jobs:
   build:
     name: Build for ${{ matrix.targetPlatform }}
-    runs-on: macos-latest
+    runs-on: self-hosted
     defaults:
         run:
           shell: bash
@@ -129,7 +129,7 @@ jobs:
 
   release-to-app-store:
     name: Release to the App Store
-    runs-on: macos-latest
+    runs-on: self-hosted
     timeout-minutes: 60
     needs: build
     if: startsWith(github.ref, 'refs/heads/release/') || startsWith(github.event.ref, 'refs/tags/')|| github.event.inputs.manual_build_option
