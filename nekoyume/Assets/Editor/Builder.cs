@@ -123,6 +123,7 @@ namespace Editor
         [MenuItem("Build/Standalone/iOS")]
         public static void BuildiOS()
         {
+            EditorUserBuildSettings.il2CppCodeGeneration = UnityEditor.Build.Il2CppCodeGeneration.OptimizeSize;
             Debug.Log("Build iOS");
             PreProcessBuildForIOS();
             PlayerSettings.iOS.sdkVersion = iOSSdkVersion.DeviceSDK;
