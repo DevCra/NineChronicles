@@ -105,9 +105,9 @@ jobs:
             ~/.cocoapods/repos
           key: Pods-${{ hashFiles('**/Podfile') }}
           restore-keys: Pods-
-      - uses: actions/setup-ruby@v1
-        with:
-          ruby-version: 2.7
+      #- uses: ruby/setup-ruby@v1
+      #  with:
+      #    ruby-version: 2.7
       - name: Prepare for fastlane
         run: |
           sudo spctl --master-disable
