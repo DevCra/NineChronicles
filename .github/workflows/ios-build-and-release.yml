@@ -65,37 +65,6 @@ jobs:
       USYM_UPLOAD_AUTH_TOKEN: 'fake'
     
     steps:
-      - name: Set CRLF
-        run: |
-          git config --global core.autocrlf true
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-        with:
-          lfs: true
-          submodules: true
-      - name: Cache restore for debug
-        uses: actions/cache@v3
-        with:
-          path: ${{ matrix.projectPath }}/Library
-          key: Library-${{ matrix.projectPath }}-macos-${{ matrix.targetPlatform }}
-          restore-keys: |
-            Library-${{ matrix.projectPath }}-macos-
-            Library-
-
-      - name: Copy clo.json
-        run: |
-          if [ -n "${{ github.event.inputs.clo }}" ]; then
-            echo ${{ github.event.inputs.clo }} > ${{ matrix.projectPath }}/Assets/StreamingAssets/clo.json
-          fi
-
-      - uses: game-ci/unity-builder@v2
-        with:
-          projectPath: ${{ matrix.projectPath }}
-          targetPlatform: ${{ matrix.targetPlatform }}
-          buildMethod: 'Editor.Builder.Build${{ matrix.targetPlatform }}'
-          buildName: ${{ matrix.targetPlatform }}
-          version: ${{ github.event.inputs.app-version }}
-          
       - name: Cache restore cocoapods
         uses: actions/cache@v2
         if: ${{ always() }}
