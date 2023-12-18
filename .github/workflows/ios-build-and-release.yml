@@ -65,6 +65,11 @@ jobs:
       USYM_UPLOAD_AUTH_TOKEN: 'fake'
     
     steps:
+      - name: Decode GoogleService-Info.plist File
+        run: |        
+          echo "$GOOGLE_SERVICE_INFO" | base64 -D -o ./nekoyume/Assets/GoogleService-Info.plist
+        env:
+          GOOGLE_SERVICE_INFO: ${{ secrets.GOOGLE_SERVICE_INFO }}
       - name: Cache restore cocoapods
         uses: actions/cache@v2
         if: ${{ always() }}
