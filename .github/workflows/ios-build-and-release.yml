@@ -39,8 +39,8 @@ env:
 jobs:
   build:
     name: Build for ${{ matrix.targetPlatform }}
-    #runs-on: self-hosted
-    runs-on: macos-13-xlarge
+    runs-on: self-hosted
+    # runs-on: macos-13-xlarge
     defaults:
         run:
           shell: bash
@@ -113,10 +113,10 @@ jobs:
           key: Pods-${{ hashFiles('**/Podfile') }}
           restore-keys: Pods-
         
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '2.7'
-          bundler-cache: true
+      # - uses: ruby/setup-ruby@v1
+      #   with:
+      #     ruby-version: '2.7'
+      #     bundler-cache: true
           
       - name: Archive iOS
         uses: maierj/fastlane-action@v3.0.0
@@ -137,8 +137,8 @@ jobs:
 
   release-to-app-store:
     name: Release to the App Store
-    #runs-on: self-hosted
-    runs-on: macos-13-xlarge
+    runs-on: self-hosted
+    # runs-on: macos-13-xlarge
     timeout-minutes: 60
     needs: build
     if: startsWith(github.ref, 'refs/heads/release/') || startsWith(github.event.ref, 'refs/tags/')|| github.event.inputs.manual_build_option
@@ -171,6 +171,6 @@ jobs:
             ${{ github.workspace }}/*.ipa
             ${{ github.workspace }}/*.dSYM.zip
       - name: Upload to the App Store
-        uses: maierj/fastlane-action@v1.4.0
+        uses: maierj/fastlane-action@v3.0.0
         with:
           lane: 'ios release'
