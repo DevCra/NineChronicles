@@ -94,6 +94,14 @@ jobs:
           echo "$GOOGLE_SERVICE_INFO" | base64 -d > ${{ matrix.projectPath }}/Assets/GoogleService-Info.plist
           # echo "$GOOGLE_SERVICE_INFO" | base64 -D -o ${{ matrix.projectPath }}/Assets/GoogleService-Info.plist
 
+      - name: Free Disk Space
+        run: |
+          sudo swapoff -a
+          sudo rm -f /swapfile
+          sudo apt clean
+          docker rmi $(docker image ls -aq)
+          df -h
+          
       - uses: game-ci/unity-builder@v2
         with:
           projectPath: ${{ matrix.projectPath }}
