@@ -91,7 +91,8 @@ jobs:
           
       - name: Decode GoogleService-Info.plist File
         run: |        
-          echo "$GOOGLE_SERVICE_INFO" | base64 -D -o ${{ matrix.projectPath }}/Assets/GoogleService-Info.plist
+          echo "$GOOGLE_SERVICE_INFO" | base64 -d > ${{ matrix.projectPath }}/Assets/GoogleService-Info.plist
+          # echo "$GOOGLE_SERVICE_INFO" | base64 -D -o ${{ matrix.projectPath }}/Assets/GoogleService-Info.plist
 
       - uses: game-ci/unity-builder@v2
         with:
