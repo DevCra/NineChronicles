@@ -64,6 +64,7 @@ platform :ios do
           ENV["IOS_APP_ID"] => "match AppStore #{ENV['IOS_APP_ID']}"
         }
       }
+      xcargs: "CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM=#{ENV['APPLE_TEAM_ID']}"
     )
   end
 
