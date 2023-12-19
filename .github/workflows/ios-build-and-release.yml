@@ -166,7 +166,7 @@ jobs:
     name: Release to the App Store
     runs-on: macos-latest
     timeout-minutes: 60
-    needs: build
+    needs: buildIOS
     if: startsWith(github.ref, 'refs/heads/release/') || startsWith(github.event.ref, 'refs/tags/')|| github.event.inputs.manual_build_option
     env:
       APPLE_CONNECT_EMAIL: ${{ secrets.APPLE_CONNECT_EMAIL }}
