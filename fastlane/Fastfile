@@ -41,17 +41,17 @@ platform :ios do
 
   desc "Create .ipa"
   lane :build do
-    cocoapods(podfile: "#{ENV['IOS_BUILD_PATH']}/iOS/Podfile")
-    disable_automatic_code_signing(path: "#{ENV['IOS_BUILD_PATH']}/iOS/Unity-iPhone.xcodeproj")
+    cocoapods(podfile: "#{ENV['IOS_BUILD_PATH']}/iOS/Nine Chronicles M/Podfile")
+    disable_automatic_code_signing(path: "#{ENV['IOS_BUILD_PATH']}/iOS/Nine Chronicles M/Unity-iPhone.xcodeproj")
     certificates
     update_project_provisioning(
-      xcodeproj: "#{ENV['IOS_BUILD_PATH']}/iOS/Unity-iPhone.xcodeproj",
+      xcodeproj: "#{ENV['IOS_BUILD_PATH']}/iOS/Nine Chronicles M/Unity-iPhone.xcodeproj",
       target_filter: "Unity-iPhone",
       profile: ENV["sigh_#{ENV['IOS_APP_ID']}_appstore_profile-path"],
       code_signing_identity: "Apple Distribution: #{ENV['APPLE_TEAM_NAME']} (#{ENV['APPLE_TEAM_ID']})"
     )
     gym(
-      workspace: "#{ENV['IOS_BUILD_PATH']}/iOS/Unity-iPhone.xcworkspace",
+      workspace: "#{ENV['IOS_BUILD_PATH']}/iOS/Nine Chronicles M/Unity-iPhone.xcworkspace",
       scheme: "Unity-iPhone",
       clean: true,
       #clean: false,
