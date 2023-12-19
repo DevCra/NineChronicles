@@ -100,6 +100,7 @@ jobs:
           buildMethod: 'Editor.Builder.Build${{ matrix.targetPlatform }}'
           buildName: ${{ matrix.targetPlatform }}
           version: ${{ github.event.inputs.app-version }}
+          allowDirtyBuild: true
           
       - name: Cache restore cocoapods
         uses: actions/cache@v2
