@@ -214,6 +214,7 @@ jobs:
       PROJECT_NAME: NineChronicles
       RELEASE_NOTES: ${{ github.event.release.body }}
       MATCH_REPOSITORY_ACCOUNT: ${{ secrets.MATCH_REPOSITORY_ACCOUNT }}
+      GIT_REPO_CERT: ${{ secrets.GIT_REPO_CERT }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
