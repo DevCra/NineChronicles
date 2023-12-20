@@ -226,6 +226,11 @@ jobs:
           path: |
             ${{ github.workspace }}/*.ipa
             ${{ github.workspace }}/*.dSYM.zip
+        
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7'
+          bundler-cache: true
       - name: Upload to the App Store
         uses: maierj/fastlane-action@v3.0.0
         with:
