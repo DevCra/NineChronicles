@@ -21,7 +21,7 @@ platform :ios do
       api_key: api_key, # pass api_key
       force: true,
       skip_screenshots: true,
-      skip_metadata: true
+      skip_metadata: true,
       precheck_include_in_app_purchases: false
     )
   end
