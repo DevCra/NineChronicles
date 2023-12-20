@@ -138,6 +138,15 @@ jobs:
       USYM_UPLOAD_AUTH_TOKEN: 'fake'
       GOOGLE_SERVICE_INFO: ${{ secrets.GOOGLE_SERVICE_INFO }}
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        
+      - name: Download iOS Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Build-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
+          
       - name: Cache restore cocoapods
         uses: actions/cache@v2
         if: ${{ always() }}
