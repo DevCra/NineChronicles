@@ -37,84 +37,84 @@ env:
   UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
 
 jobs:
-  # build:
-  #   name: Build for ${{ matrix.targetPlatform }}
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #       run:
-  #         shell: bash
-  #   strategy:
-  #     matrix:
-  #       projectPath:
-  #         - nekoyume
-  #       targetPlatform:
-  #         - iOS
-  #   env:
-  #     APPLE_CONNECT_EMAIL: ${{ secrets.APPLE_CONNECT_EMAIL }}
-  #     APPLE_DEVELOPER_EMAIL: ${{ secrets.APPLE_DEVELOPER_EMAIL }}
-  #     APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-  #     APPLE_TEAM_NAME: ${{ secrets.APPLE_TEAM_NAME }}
-  #     APPLE_ITC_TEAM_ID: ${{ secrets.APPLE_ITC_TEAM_ID }}
-  #     MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-  #     MATCH_PERSONAL_ACCESS_TOKEN: ${{ secrets.MATCH_PERSONAL_ACCESS_TOKEN }}
-  #     IOS_APP_ID: com.planetariumlabs.ninechroniclesmobile
-  #     IOS_BUILD_PATH: ${{ format('{0}/build/iOS', github.workspace) }}
-  #     PROJECT_NAME: NineChronicles
-  #     RELEASE_NOTES: ${{ github.event.release.body }}
-  #     MATCH_REPOSITORY_ACCOUNT: ${{ secrets.MATCH_REPOSITORY_ACCOUNT }}
-  #     USYM_UPLOAD_AUTH_TOKEN: 'fake'
-  #     GOOGLE_SERVICE_INFO: ${{ secrets.GOOGLE_SERVICE_INFO }}
+  build:
+    name: Build for ${{ matrix.targetPlatform }}
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+          shell: bash
+    strategy:
+      matrix:
+        projectPath:
+          - nekoyume
+        targetPlatform:
+          - iOS
+    env:
+      APPLE_CONNECT_EMAIL: ${{ secrets.APPLE_CONNECT_EMAIL }}
+      APPLE_DEVELOPER_EMAIL: ${{ secrets.APPLE_DEVELOPER_EMAIL }}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      APPLE_TEAM_NAME: ${{ secrets.APPLE_TEAM_NAME }}
+      APPLE_ITC_TEAM_ID: ${{ secrets.APPLE_ITC_TEAM_ID }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      MATCH_PERSONAL_ACCESS_TOKEN: ${{ secrets.MATCH_PERSONAL_ACCESS_TOKEN }}
+      IOS_APP_ID: com.planetariumlabs.ninechroniclesmobile
+      IOS_BUILD_PATH: ${{ format('{0}/build/iOS', github.workspace) }}
+      PROJECT_NAME: NineChronicles
+      RELEASE_NOTES: ${{ github.event.release.body }}
+      MATCH_REPOSITORY_ACCOUNT: ${{ secrets.MATCH_REPOSITORY_ACCOUNT }}
+      USYM_UPLOAD_AUTH_TOKEN: 'fake'
+      GOOGLE_SERVICE_INFO: ${{ secrets.GOOGLE_SERVICE_INFO }}
     
-  #   steps:
-  #     - name: Set CRLF
-  #       run: |
-  #         git config --global core.autocrlf true
-  #     - name: Checkout Repository
-  #       uses: actions/checkout@v3
-  #       with:
-  #         lfs: true
-  #         submodules: true
-  #     - name: Cache restore for debug
-  #       uses: actions/cache@v3
-  #       with:
-  #         path: ${{ matrix.projectPath }}/Library
-  #         key: Library-${{ matrix.projectPath }}-macos-${{ matrix.targetPlatform }}
-  #         restore-keys: |
-  #           Library-${{ matrix.projectPath }}-macos-
-  #           Library-
+    steps:
+      - name: Set CRLF
+        run: |
+          git config --global core.autocrlf true
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+          submodules: true
+      - name: Cache restore for debug
+        uses: actions/cache@v3
+        with:
+          path: ${{ matrix.projectPath }}/Library
+          key: Library-${{ matrix.projectPath }}-macos-${{ matrix.targetPlatform }}
+          restore-keys: |
+            Library-${{ matrix.projectPath }}-macos-
+            Library-
 
-  #     - name: Copy clo.json
-  #       run: |
-  #         if [ -n "${{ github.event.inputs.clo }}" ]; then
-  #           echo ${{ github.event.inputs.clo }} > ${{ matrix.projectPath }}/Assets/StreamingAssets/clo.json
-  #         fi
+      - name: Copy clo.json
+        run: |
+          if [ -n "${{ github.event.inputs.clo }}" ]; then
+            echo ${{ github.event.inputs.clo }} > ${{ matrix.projectPath }}/Assets/StreamingAssets/clo.json
+          fi
           
-  #     - name: Decode GoogleService-Info.plist File
-  #       run: |        
-  #         echo "$GOOGLE_SERVICE_INFO" | base64 -d > ${{ matrix.projectPath }}/Assets/GoogleService-Info.plist
-  #         # echo "$GOOGLE_SERVICE_INFO" | base64 -D -o ${{ matrix.projectPath }}/Assets/GoogleService-Info.plist
+      - name: Decode GoogleService-Info.plist File
+        run: |        
+          echo "$GOOGLE_SERVICE_INFO" | base64 -d > ${{ matrix.projectPath }}/Assets/GoogleService-Info.plist
+          # echo "$GOOGLE_SERVICE_INFO" | base64 -D -o ${{ matrix.projectPath }}/Assets/GoogleService-Info.plist
 
-  #     - name: Free Disk Space
-  #       run: |
-  #         sudo swapoff -a
-  #         sudo rm -f /swapfile
-  #         sudo apt clean
-  #         docker rmi $(docker image ls -aq)
-  #         df -h
+      - name: Free Disk Space
+        run: |
+          sudo swapoff -a
+          sudo rm -f /swapfile
+          sudo apt clean
+          docker rmi $(docker image ls -aq)
+          df -h
           
-  #     - uses: game-ci/unity-builder@v2
-  #       with:
-  #         projectPath: ${{ matrix.projectPath }}
-  #         targetPlatform: ${{ matrix.targetPlatform }}
-  #         buildMethod: 'Editor.Builder.Build${{ matrix.targetPlatform }}'
-  #         buildName: ${{ matrix.targetPlatform }}
-  #         version: ${{ github.event.inputs.app-version }}
-  #         allowDirtyBuild: true
+      - uses: game-ci/unity-builder@v2
+        with:
+          projectPath: ${{ matrix.projectPath }}
+          targetPlatform: ${{ matrix.targetPlatform }}
+          buildMethod: 'Editor.Builder.Build${{ matrix.targetPlatform }}'
+          buildName: ${{ matrix.targetPlatform }}
+          version: ${{ github.event.inputs.app-version }}
+          allowDirtyBuild: true
           
-  #     - uses: actions/upload-artifact@v3
-  #       with:
-  #         name: Build-${{ matrix.targetPlatform }}
-  #         path: build/${{ matrix.targetPlatform }}
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Build-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
 
   buildIOS:      
     name: Build Archive for iOS
