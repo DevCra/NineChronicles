@@ -120,7 +120,7 @@ jobs:
     name: Build Archive for iOS
     runs-on: macos-latest
     timeout-minutes: 60
-    # needs: build
+    needs: build
     #if: startsWith(github.ref, 'refs/heads/release/') || startsWith(github.event.ref, 'refs/tags/')|| github.event.inputs.manual_build_option
     strategy:
       matrix:
