@@ -122,6 +122,12 @@ jobs:
     timeout-minutes: 60
     # needs: build
     #if: startsWith(github.ref, 'refs/heads/release/') || startsWith(github.event.ref, 'refs/tags/')|| github.event.inputs.manual_build_option
+    strategy:
+      matrix:
+        projectPath:
+          - nekoyume
+        targetPlatform:
+          - iOS
     env:
       APPLE_CONNECT_EMAIL: ${{ secrets.APPLE_CONNECT_EMAIL }}
       APPLE_DEVELOPER_EMAIL: ${{ secrets.APPLE_DEVELOPER_EMAIL }}
