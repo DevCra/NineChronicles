@@ -143,6 +143,7 @@ jobs:
       MATCH_REPOSITORY_ACCOUNT: ${{ secrets.MATCH_REPOSITORY_ACCOUNT }}
       USYM_UPLOAD_AUTH_TOKEN: 'fake'
       GOOGLE_SERVICE_INFO: ${{ secrets.GOOGLE_SERVICE_INFO }}
+      GIT_REPO_CERT: ${{ secrets.GIT_REPO_CERT }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
