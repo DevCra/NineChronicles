@@ -117,8 +117,8 @@ jobs:
           name: Build-${{ matrix.targetPlatform }}
           path: build/${{ matrix.targetPlatform }}
 
-  buildIOS:      
-    name: Build Archive for iOS
+  build-and-upload:      
+    name: Build Archive for iOS and Upload to TestFlight
     runs-on: macos-latest
     timeout-minutes: 60
     needs: build
@@ -180,58 +180,6 @@ jobs:
         with:
           lane: 'ios build'
           
-      - name: run if fail_step failed
-        if: failure()
-        run: cat /Users/runner/Library/Logs/gym/*Unity-iPhone.log
-      - name: Upload Build
-        uses: actions/upload-artifact@v3
-        #if: startsWith(github.ref, 'refs/heads/release/') || startsWith(github.event.ref, 'refs/tags/')|| github.event.inputs.manual_build_option
-        with:
-          name: ipa
-          path: |
-            ${{ github.workspace }}/*.ipa
-            ${{ github.workspace }}/*.dSYM.zip
-
-  upload-to-test-flight:
-    name: Release to the App Store
-    runs-on: macos-latest
-    timeout-minutes: 60
-    needs: buildIOS
-    #if: startsWith(github.ref, 'refs/heads/release/') || startsWith(github.event.ref, 'refs/tags/')|| github.event.inputs.manual_build_option
-    env:
-      APPLE_CONNECT_EMAIL: ${{ secrets.APPLE_CONNECT_EMAIL }}
-      APPLE_DEVELOPER_EMAIL: ${{ secrets.APPLE_DEVELOPER_EMAIL }}
-      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-      APPLE_TEAM_NAME: ${{ secrets.APPLE_TEAM_NAME }}
-      APPLE_ITC_TEAM_ID: ${{ secrets.APPLE_ITC_TEAM_ID }}
-      FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
-      FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
-      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-      MATCH_PERSONAL_ACCESS_TOKEN: ${{ secrets.MATCH_PERSONAL_ACCESS_TOKEN }}
-      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
-      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
-      ASC_KEY_CONTENT: ${{ secrets.ASC_KEY_CONTENT }}
-      IOS_APP_ID: com.planetariumlabs.ninechroniclesmobile
-      IOS_BUILD_PATH: ${{ format('{0}/build/iOS', github.workspace) }}
-      PROJECT_NAME: NineChronicles
-      RELEASE_NOTES: ${{ github.event.release.body }}
-      MATCH_REPOSITORY_ACCOUNT: ${{ secrets.MATCH_REPOSITORY_ACCOUNT }}
-      GIT_REPO_CERT: ${{ secrets.GIT_REPO_CERT }}
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-      - name: Download iOS Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: ipa
-          path: |
-            ${{ github.workspace }}/*.ipa
-            ${{ github.workspace }}/*.dSYM.zip
-        
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '2.7'
-          bundler-cache: true
       - name: Upload to the App Store
         uses: maierj/fastlane-action@v3.0.0
         with:
