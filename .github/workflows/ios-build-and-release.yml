@@ -54,7 +54,6 @@ jobs:
       APPLE_DEVELOPER_EMAIL: ${{ secrets.APPLE_DEVELOPER_EMAIL }}
       APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
       APPLE_TEAM_NAME: ${{ secrets.APPLE_TEAM_NAME }}
-      APPLE_ITC_TEAM_ID: ${{ secrets.APPLE_ITC_TEAM_ID }}
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       MATCH_PERSONAL_ACCESS_TOKEN: ${{ secrets.MATCH_PERSONAL_ACCESS_TOKEN }}
       IOS_APP_ID: com.planetariumlabs.ninechroniclesmobile
