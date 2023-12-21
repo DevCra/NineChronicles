@@ -17,6 +17,9 @@ platform :ios do
       key_content: ENV['ASC_KEY_CONTENT'], # your secret key body
       # ex) key_content: '-----BEGIN PRIVATE KEY-----\nfoobar\n-----END PRIVATE KEY-----'
     )
+    increment_build_number(
+      xcodeproj: "#{ENV['IOS_BUILD_PATH']}/Nine Chronicles M/Unity-iPhone.xcodeproj",
+    )
     upload_to_app_store(
       api_key: api_key, # pass api_key
       force: true,
