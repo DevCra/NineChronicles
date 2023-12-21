@@ -192,7 +192,7 @@ jobs:
             ${{ github.workspace }}/*.ipa
             ${{ github.workspace }}/*.dSYM.zip
 
-  release-to-app-store:
+  upload-to-test-flight:
     name: Release to the App Store
     runs-on: macos-latest
     timeout-minutes: 60
@@ -235,4 +235,4 @@ jobs:
       - name: Upload to the App Store
         uses: maierj/fastlane-action@v3.0.0
         with:
-          lane: 'ios release'
+          lane: 'ios beta'
