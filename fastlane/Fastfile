@@ -17,9 +17,6 @@ platform :ios do
       key_content: ENV['ASC_KEY_CONTENT'], # your secret key body
       # ex) key_content: '-----BEGIN PRIVATE KEY-----\nfoobar\n-----END PRIVATE KEY-----'
     )
-    increment_build_number(
-      xcodeproj: "#{ENV['IOS_BUILD_PATH']}/Nine Chronicles M/Unity-iPhone.xcodeproj",
-    )
     upload_to_app_store(
       api_key: api_key, # pass api_key
       force: true,
@@ -53,6 +50,9 @@ platform :ios do
       target_filter: "Unity-iPhone",
       profile: ENV["sigh_#{ENV['IOS_APP_ID']}_appstore_profile-path"],
       code_signing_identity: "Apple Distribution: #{ENV['APPLE_TEAM_NAME']} (#{ENV['APPLE_TEAM_ID']})"
+    )
+    increment_build_number(
+      xcodeproj: "#{ENV['IOS_BUILD_PATH']}/Nine Chronicles M/Unity-iPhone.xcodeproj",
     )
     gym(
       workspace: "#{ENV['IOS_BUILD_PATH']}/Nine Chronicles M/Unity-iPhone.xcworkspace",
