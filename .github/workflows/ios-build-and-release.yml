@@ -134,17 +134,21 @@ jobs:
       APPLE_DEVELOPER_EMAIL: ${{ secrets.APPLE_DEVELOPER_EMAIL }}
       APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
       APPLE_TEAM_NAME: ${{ secrets.APPLE_TEAM_NAME }}
-      APPLE_ITC_TEAM_ID: ${{ secrets.APPLE_ITC_TEAM_ID }}
+      FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+      FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       MATCH_PERSONAL_ACCESS_TOKEN: ${{ secrets.MATCH_PERSONAL_ACCESS_TOKEN }}
+      MATCH_REPOSITORY_ACCOUNT: ${{ secrets.MATCH_REPOSITORY_ACCOUNT }}
       IOS_APP_ID: com.planetariumlabs.ninechroniclesmobile
       IOS_BUILD_PATH: ${{ format('{0}/build/iOS', github.workspace) }}
       PROJECT_NAME: NineChronicles
       RELEASE_NOTES: ${{ github.event.release.body }}
-      MATCH_REPOSITORY_ACCOUNT: ${{ secrets.MATCH_REPOSITORY_ACCOUNT }}
       USYM_UPLOAD_AUTH_TOKEN: 'fake'
       GOOGLE_SERVICE_INFO: ${{ secrets.GOOGLE_SERVICE_INFO }}
       GIT_REPO_CERT: ${{ secrets.GIT_REPO_CERT }}
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      ASC_KEY_CONTENT: ${{ secrets.ASC_KEY_CONTENT }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
