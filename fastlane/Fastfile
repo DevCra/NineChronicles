@@ -51,8 +51,14 @@ platform :ios do
       profile: ENV["sigh_#{ENV['IOS_APP_ID']}_appstore_profile-path"],
       code_signing_identity: "Apple Distribution: #{ENV['APPLE_TEAM_NAME']} (#{ENV['APPLE_TEAM_ID']})"
     )
+    api_key = app_store_connect_api_key(
+      key_id: ENV['ASC_KEY_ID'], # your key id
+      issuer_id: ENV['ASC_ISSUER_ID'], # your issuer id
+      key_content: ENV['ASC_KEY_CONTENT'], # your secret key body
+      # ex) key_content: '-----BEGIN PRIVATE KEY-----\nfoobar\n-----END PRIVATE KEY-----'
+    )
     previous_build_number = latest_testflight_build_number(
-      app_identifier: app_id,
+      app_identifier: ENV['IOS_APP_ID'],
       api_key: api_key,
     )
     current_build_number = previous_build_number + 1
