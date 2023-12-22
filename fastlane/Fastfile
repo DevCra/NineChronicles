@@ -36,8 +36,7 @@ platform :ios do
     )
     upload_to_testflight(
       api_key: api_key, # pass api_key
-      skip_waiting_for_build_processing: true,
-      uses_non_exempt_encryption: false
+      skip_waiting_for_build_processing: true
     )
   end
 
@@ -67,6 +66,7 @@ platform :ios do
       xcodeproj: "#{ENV['IOS_BUILD_PATH']}/Nine Chronicles M/Unity-iPhone.xcodeproj",
       build_number: current_build_number
     )
+    set_info_plist_value(path: "#{ENV['IOS_BUILD_PATH']}/Nine Chronicles M/Info.plist", key: "ITSAppUsesNonExemptEncryption", value: false)
     gym(
       workspace: "#{ENV['IOS_BUILD_PATH']}/Nine Chronicles M/Unity-iPhone.xcworkspace",
       scheme: "Unity-iPhone",
