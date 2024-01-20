@@ -39,7 +39,7 @@ env:
 jobs:
   build:
     name: Build for ${{ matrix.targetPlatform }}
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     defaults:
         run:
           shell: bash
@@ -92,8 +92,8 @@ jobs:
           
       - name: Decode GoogleService-Info.plist File
         run: |        
-          echo "$GOOGLE_SERVICE_INFO" | base64 -d > ${{ matrix.projectPath }}/Assets/GoogleService-Info.plist
-          # echo "$GOOGLE_SERVICE_INFO" | base64 -D -o ${{ matrix.projectPath }}/Assets/GoogleService-Info.plist
+          # echo "$GOOGLE_SERVICE_INFO" | base64 -d > ${{ matrix.projectPath }}/Assets/GoogleService-Info.plist
+          echo "$GOOGLE_SERVICE_INFO" | base64 -D -o ${{ matrix.projectPath }}/Assets/GoogleService-Info.plist
 
       - name: Free Disk Space
         run: |
@@ -120,7 +120,7 @@ jobs:
 
   build-and-upload:      
     name: Build Archive for iOS and Upload to TestFlight
-    runs-on: macos-latest
+    runs-on: self-hosted
     timeout-minutes: 60
     needs: build
     #if: startsWith(github.ref, 'refs/heads/release/') || startsWith(github.event.ref, 'refs/tags/')|| github.event.inputs.manual_build_option
